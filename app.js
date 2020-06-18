@@ -22,16 +22,7 @@ app.use(routes)
 
 
 
-//  搜尋餐廳
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  Todo.find({ name: keyword })
-    .lean()
-    .then(restaurant => res.render('index', { restaurant }))
-    .catch(error => console.error(error))
 
-  console.log(keyword)
-})
 
 app.listen(port, () => {
   console.log('This server is listening to http://localhost:3000')
