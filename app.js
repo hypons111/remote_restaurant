@@ -3,24 +3,12 @@ const express = require('express')
 const app = express()
 const expHan = require('express-handlebars')
 const bodPar = require('body-parser')
-const mongoose = require('mongoose')
+const db = require('./config/mongoose')
 const Todo = require('./models/todo')
 
 app.engine('handlebars', expHan({ defalutLayouts: 'main' }))
 app.set('view engine', 'handlebars')
-
 app.use(bodPar.urlencoded({ extended: true }))
-
-mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true, useUnifiedTopology: true })
-const db = mongoose.connection
-
-db.on('error', () => {
-  console.log('mongoose error')
-})
-db.once('open', () => {
-  console.log('mongoose conneted')
-})
-
 app.use(express.static('public'))
 
 //  首頁
@@ -132,10 +120,6 @@ app.post('/restaurants/:id/delete', (req, res) => {
     .catch(error => console.log(error))
 })
 
-//  bugfix 頁
-app.get('/restaurant/restaurant/new', (req, res) => {
-  res.redirect('/restaurant/new')
-})
 
 //  搜尋餐廳
 app.get('/search', (req, res) => {

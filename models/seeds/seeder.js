@@ -1,19 +1,8 @@
-const mongoose = require('mongoose')
+const db = require('../../config/mongoose')
 const restList = require('../../rest.json')
 const Todo = require('../todo')
 
-
-mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true, useUnifiedTopology: true })
-const db = mongoose.connection
-
-
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-
-
 db.once('open', () => {
-  console.log('mongodb connected!')
   for (let i = 0; i < restList.results.length; i++) {
     Todo.create({
       name: restList.results[i].name,
@@ -23,10 +12,7 @@ db.once('open', () => {
       location: restList.results[i].location,
       description: restList.results[i].description
     })
-
   }
-
-
   console.log('done')
 })
 
