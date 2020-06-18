@@ -4,12 +4,14 @@ const app = express()
 const expHan = require('express-handlebars')
 const bodPar = require('body-parser')
 const db = require('./config/mongoose')
+const metOve = require('method-override')
 const Todo = require('./models/todo')
 
 app.engine('handlebars', expHan({ defalutLayouts: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(bodPar.urlencoded({ extended: true }))
 app.use(express.static('public'))
+app.use(metOve('_method'))
 
 //  首頁
 app.get('/', (req, res) => {
@@ -82,7 +84,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
 })
 
 //  將修改後的資料送往資料庫
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   const name = req.body.name
   const category = req.body.category
@@ -106,8 +108,8 @@ app.post('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-//  刪除頁
-app.post('/restaurants/:id/delete', (req, res) => {
+//  刪除
+app.delete('/restaurants/:id', (req, res) => {
   //  取得網址上的識別碼，用來查詢使用者想刪除的 To-do
   const id = req.params.id
 

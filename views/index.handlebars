@@ -11,7 +11,7 @@
               <h6 class="card-title mb-1">{{this.name}}</h6>
               <a href="/restaurants/{{ this._id }}"><span class="badge badge-primary">Detail</span></a>
               <a href="/restaurants/{{ this._id }}/edit"><span class="badge badge-success">Edit</span></a>
-              <form action="/restaurants/{{ this._id }}/delete" method="POST" style="display: inline;">
+              <form action="/restaurants/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
                 <span class="badge badge-danger"><button type="submit">Delete</button></button></span>
               </form>
             </div>
